@@ -32,7 +32,7 @@
     </div>
     <div class="container">
         <div class="row align-middle">
-            <div class="col-sm align-middle" id="crystal1">
+            <div class="col-sm align-middle" id="crystal1" value="9">
              <img src="assets/images/crystal1.png" alt="crystal1" class="img-thumbnail crystal">
             </div>
             <div class="col-sm align-middle" id="crystal2">
@@ -68,23 +68,28 @@
 
 $(document).ready(function() {
 
-    var userScore = "";
-    var targetScore= "";
+    var userScore = 0;
+    var targetScore= 1;
     var wins = 0;
     var losses = 0;
+
+    var crystal1 = 0;
+    var crystal2 = 0;
+    var crystal3 = 0;
+    var crystal4 = 0;
 
     //function to reset game
     function reset(){
         //generate random number between 19-120, hold in var for targetScore
-        var targetScore = Math.floor(Math.random() * (120-19) + 19);
+        targetScore = Math.floor(Math.random() * (120-19) + 19);
         console.log("targetScore: " + targetScore);
         $("#targetScore").html(targetScore);
         
         //generate random number between 1-12, hold in var for each crystal
-        var crystal1 = Math.floor(Math.random() * (12-1) + 1);
-        var crystal2 = Math.floor(Math.random() * (12-1) + 1);
-        var crystal3 = Math.floor(Math.random() * (12-1) + 1);
-        var crystal4 = Math.floor(Math.random() * (12-1) + 1);
+        crystal1 = Math.floor(Math.random() * (12-1) + 1);
+        crystal2 = Math.floor(Math.random() * (12-1) + 1);
+        crystal3 = Math.floor(Math.random() * (12-1) + 1);
+        crystal4 = Math.floor(Math.random() * (12-1) + 1);
         console.log("crystal1= " , crystal1);
         console.log("crystal2= " , crystal2);
         console.log("crystal3= " , crystal3);
@@ -97,53 +102,62 @@ $(document).ready(function() {
     };
     reset();
 
-        //when user clicks crystal1, add that value to userScore
-        $("#crystal1").on("click", function() {
-            userScore = (parseInt(userScore) + parseInt(crystal1));
-            $("#userScore").html(userScore);
-            console.log("userScore: " + userScore);
-        });
-        //when user clicks crystal2, add that value to userScore
-        $("#crystal2").on("click", function() {
-            userScore = userScore + parseInt(crystal2);
-            $("#userScore").html(userScore);
-            console.log("userScore: " + userScore);
-        });
-        //when user clicks crystal3, add that value to userScore
-        $("#crystal3").on("click", function() {
-            userScore = userScore + parseInt(crystal3);
-            $("#userScore").html(userScore);
-            console.log("userScore: " + userScore);
-        });
+    //when user clicks crystal1, add that value to userScore
+    $("#crystal1").on("click", function() {
+        userScore = parseInt(userScore) + parseInt(crystal1);
+        $("#userScore").html(userScore);
+        console.log("userScore: " + userScore);
+        console.log("targetScore: " + targetScore);
+        guessCheck();
+    });
+    //when user clicks crystal2, add that value to userScore
+    $("#crystal2").on("click", function() {
+        userScore = userScore + parseInt(crystal2);
+        $("#userScore").html(userScore);
+        console.log("userScore: " + userScore);
+        console.log("targetScore: " + targetScore);
+        guessCheck();
+    });
+    //when user clicks crystal3, add that value to userScore
+    $("#crystal3").on("click", function() {
+        userScore = userScore + parseInt(crystal3);
+        $("#userScore").html(userScore);
+        console.log("userScore: " + userScore);
+        console.log("targetScore: " + targetScore);
+        guessCheck();
+    });
 
-        //when user clicks crystal4, add that value to userScore
-        $("#crystal4").on("click", function() {
-            userScore = userScore + parseInt(crystal4);
-            $("#userScore").html(userScore);
-            console.log("userScore: " + userScore);
-        });
-       
-        //if userScore = targetScore, 
-            if ((userScore) === (targetScore)) {
-            //add one to wins
-            wins++;
-            console.log("wins: " + wins);
-            $("#wins").html("Wins: " + wins);
-            reset();
-            }
-
-        //if userScore > targetScore
-        if ((userScore) > (targetScore)) {
-            //add 1 to losses
-            losses++;
-            console.log("losses: " + wins);
-            $("#losses").html("Losses: " + losses);
-            reset();
-        }
-
-    })
-
-    </script>
+    //when user clicks crystal4, add that value to userScore
+    $("#crystal4").on("click", function() {
+        userScore = userScore + parseInt(crystal4);
+        $("#userScore").html(userScore);
+        console.log("userScore: " + userScore);
+        console.log("targetScore: " + targetScore);
+        guessCheck();
+    });
     
+    function guessCheck(){
+    //if userScore = targetScore, 
+    if (userScore === targetScore) {
+        //add one to wins
+        wins++;
+        console.log("wins: " + wins);
+        $("#wins").html("Wins: " + wins);
+        reset();
+    }
+
+    //if userScore > targetScore
+    if (userScore > targetScore) {
+        //add 1 to losses
+        losses++;
+        console.log("losses: " + wins);
+        $("#losses").html("Losses: " + losses);
+        reset();
+    }
+}
+})
+
+</script>
+
 </body>
 </html>
